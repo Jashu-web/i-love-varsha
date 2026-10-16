@@ -1,185 +1,487 @@
- 
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>I Love Varsha</title>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Love Varsha ❤️</title>
+
 <style>
-    body {
-     background-color:lightblue;
-     text-align: center;
-     font-family: Arial, sans-serif;
-     padding: 30px;
+:root {
+    --bg1: #dff6ff;
+    --bg2: #fce7f3;
+    --card: rgba(255,255,255,0.78);
+    --text: #24304f;
+    --accent: #7657e8;
+    --accent2: #ed5b9d;
+    --border: rgba(118,87,232,0.18);
 }
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 25px 16px 40px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: var(--text);
+    background: linear-gradient(135deg, var(--bg1), var(--bg2), #e9e5ff);
+    background-size: 250% 250%;
+    animation: backgroundMove 12s ease infinite;
+    transition: background 0.4s, color 0.4s;
+}
+
+body.dark {
+    --bg1: #141526;
+    --bg2: #30203d;
+    --card: rgba(35,35,56,0.9);
+    --text: #f5f1ff;
+    --accent: #a995ff;
+    --accent2: #ff80bd;
+    --border: rgba(190,170,255,0.2);
+}
+
+@keyframes backgroundMove {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.topbar {
+    max-width: 760px;
+    margin: 0 auto 22px;
+    display: flex;
+    justify-content: flex-end;
+}
+
 h1 {
-   color: darkblue;
-   font-size: 42px;
-   margin-bottom: 20px;
+    color: var(--accent);
+    font-size: clamp(30px, 6vw, 48px);
+    margin: 12px 0;
 }
+
+.subtitle {
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.card {
+    max-width: 600px;
+    margin: 22px auto;
+    padding: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    box-shadow: 0 12px 35px rgba(60,40,100,0.12);
+    backdrop-filter: blur(12px);
+}
+
+.profile-image {
+    width: min(300px, 100%);
+    max-height: 380px;
+    object-fit: cover;
+    border-radius: 22px;
+    box-shadow: 0 10px 30px rgba(90,50,140,0.22);
+    animation: appear 0.9s ease both;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 button {
-  background-color:darkblue;
-  Color:white;
-  padding:12px 25px;
-  border:none;
-  border-radius: 10px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: 0.3s;
+    padding: 12px 18px;
+    margin: 5px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
 }
+
 button:hover {
-  background-color:blue;
-  transform: scale(1.08);
+    transform: translateY(-2px);
+    filter: brightness(1.08);
 }
-img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 20px;
-    box-shadow: 0 8px rgba(0,0,0,0.25);
+
+button:focus-visible, input:focus-visible {
+    outline: 3px solid var(--accent2);
+    outline-offset: 3px;
 }
+
+input {
+    width: min(100%, 350px);
+    padding: 13px;
+    margin: 8px 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card);
+    color: var(--text);
+    font-size: 16px;
+}
+
+#message {
+    font-size: 18px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+#taskList {
+    list-style: none;
+    padding: 0;
+    margin: 18px 0 0;
+}
+
+#taskList li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 10px 0;
+    padding: 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-align: left;
+}
+
+.task-label {
+    flex: 1;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+}
+
+.task-label.done {
+    text-decoration: line-through;
+    opacity: 0.65;
+}
+
+.delete-button {
+    background: #e74c78;
+    padding: 8px 12px;
+}
+
+#timer {
+    font-size: clamp(38px, 10vw, 55px);
+    font-variant-numeric: tabular-nums;
+    margin: 18px 0;
+}
+
 .hearts {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    font-size: 28px;
-    animation: float 2s infinite alternate;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding: 20px 0;
+    font-size: 27px;
+}
+
+.hearts span {
+    display: inline-block;
+    animation: float 2s ease-in-out infinite alternate;
+}
+
+.hearts span:nth-child(even) {
+    animation-delay: 0.7s;
 }
 
 @keyframes float {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(-20px);
-    }
-}
-body.dark {
-    background-color: #222;
-    color: white;
+    to { transform: translateY(-13px) rotate(8deg); }
 }
 
-body.dark h1,
-body.dark h2 {
-    color: white;
+footer {
+    padding: 15px;
+    opacity: 0.8;
+    font-size: 14px;
+}
+
+@media (max-width: 420px) {
+    .card { padding: 18px 13px; }
+    #taskList li { padding: 9px; }
+    button { padding: 11px 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
 }
 </style>
 </head>
 
 <body>
-<button onclick="document.body.classList.toggle('dark')">🌙 Dark Mode</button>
-    <h1>Hello Jashu!</h1>
-    <img src="WhatsApp Image 2026-06-25 at 12.07.42.jpeg" width="300">
-    <p id="message">Idi naa first website.</p>
-    <button onclick="document.getElementById('message').innerHTML='Welcome Jashu! 🎉'; this.innerHTML='You Clicked Me! ❤️'">
-    Click Me
-</button> 
-<h2>My To-Do List 📝</h2>
-<p id="progress">Completed: 0</p>
-<div>
-    <h2>Study Timer ⏰</h2>
-    <h1 id="timer">25:00</h1>
-
-    <button onclick="startTimer()">Start</button>
-    <button onclick="resetTimer()">Reset</button>
+<div class="topbar">
+    <button id="themeButton" type="button">🌙 Dark Mode</button>
 </div>
 
-<input type="text" id="taskInput" placeholder="Enter a task">
+<header>
+    <h1>Hello Jashu! 💖</h1>
+    <p class="subtitle">Welcome to my little corner of the internet ✨</p>
+</header>
 
-<button onclick="addTask()">Add Task</button>
+<main>
+    <section class="card">
+        <img
+            class="profile-image"
+            src="WhatsApp Image 2026-06-25 at 12.07.42.jpeg"
+            alt="Website picture"
+        >
+        <p id="message">Idi naa first website. ❤️</p>
+        <button id="messageButton" type="button">Click Me 💗</button>
+    </section>
 
-<ul id="taskList"></ul>
-   <div class="hearts">
-    <span>❤️</span>
-    <span>💙</span>
-    <span>💜</span>
-    <span>❤️</span>
-    <span>💙</span>
-</div>
+    <section class="card">
+        <h2>📝 My To-Do List</h2>
+        <p id="progress" aria-live="polite">Completed: 0 / 0</p>
+
+        <form id="taskForm">
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="Enter a task..."
+                maxlength="150"
+                aria-label="New task"
+            >
+            <button type="submit">Add Task ➕</button>
+        </form>
+
+        <ul id="taskList"></ul>
+    </section>
+
+    <section class="card">
+        <h2>⏰ Study Timer</h2>
+        <h1 id="timer" role="timer" aria-live="off">25:00</h1>
+        <p id="timerStatus" aria-live="polite">Ready when you are! 📚</p>
+        <button id="startButton" type="button">Start ▶️</button>
+        <button id="resetButton" type="button">Reset ↻</button>
+    </section>
+
+    <div class="hearts" aria-label="Floating hearts">
+        <span>❤️</span>
+        <span>💙</span>
+        <span>💜</span>
+        <span>🩷</span>
+        <span>💖</span>
+    </div>
+</main>
+
+<footer>Made with ❤️ by Jashu</footer>
+
 <script>
-let completedTasks = 0;
-window.onload = function() {
-    let savedTasks = localStorage.getItem("tasks");
+const $ = (id) => document.getElementById(id);
 
-    if (savedTasks) {
-        document.getElementById("taskList").innerHTML = savedTasks;
+// Dark mode
+const themeButton = $("themeButton");
+
+try {
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark");
     }
+} catch (error) {}
 
-};
+function updateThemeButton() {
+    themeButton.textContent = document.body.classList.contains("dark")
+        ? "☀️ Light Mode"
+        : "🌙 Dark Mode";
+}
 
-function addTask() {
-    let task = document.getElementById("taskInput").value;
+updateThemeButton();
 
-    if (task !== "") {
-        let li = document.createElement("li");
+themeButton.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    updateThemeButton();
 
-        let taskText = document.createElement("span");
-        taskText.innerHTML = "☐ " + task;
+    try {
+        localStorage.setItem(
+            "theme",
+            document.body.classList.contains("dark") ? "dark" : "light"
+        );
+    } catch (error) {}
+});
 
-        taskText.onclick = function() {
-    if (this.innerHTML.startsWith("☐")) {
-        this.innerHTML = "✅ " + task;
-        completedTasks++;
-        document.getElementById("progress").innerHTML =
-            "Completed: " + completedTasks;
-    }
-};
+// Message button
+$("messageButton").addEventListener("click", () => {
+    $("message").textContent = "Welcome Jashu! 🎉 Keep smiling! ❤️";
+    $("messageButton").textContent = "You Clicked Me! 💖";
+});
 
-        let deleteButton = document.createElement("button");
-        deleteButton.innerHTML = "Delete";
-       deleteButton.onclick = function() {
-    if (taskText.innerHTML.startsWith("✅")) {
-        completedTasks--;
-    }
+// Tasks
+let tasks = [];
 
-    li.remove();
-
-    document.getElementById("progress").innerHTML =
-        "Completed: " + completedTasks;
-
-    localStorage.setItem(
-        "tasks",
-        document.getElementById("taskList").innerHTML
-    );
-};
-
-        li.appendChild(taskText);
-        li.appendChild(deleteButton);
-
-        document.getElementById("taskList").appendChild(li);
-        document.getElementById("taskList").appendChild(li);
-localStorage.setItem("tasks", document.getElementById("taskList").innerHTML);
-        document.getElementById("taskInput").value = "";
+function saveTasks() {
+    try {
+        localStorage.setItem("jashuTasks", JSON.stringify(tasks));
+    } catch (error) {
+        $("progress").textContent = "Unable to save tasks in this browser.";
     }
 }
-let timeLeft = 25 * 60;
-let timerInterval;
+
+function renderTasks() {
+    const list = $("taskList");
+    list.replaceChildren();
+
+    tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+        const label = document.createElement("span");
+        label.className = "task-label" + (task.done ? " done" : "");
+        label.textContent = (task.done ? "✅ " : "☐ ") + task.text;
+        label.tabIndex = 0;
+        label.setAttribute("role", "button");
+        label.setAttribute(
+            "aria-label",
+            (task.done ? "Mark incomplete: " : "Complete: ") + task.text
+        );
+
+        function toggleTask() {
+            tasks[index].done = !tasks[index].done;
+            saveTasks();
+            renderTasks();
+        }
+
+        label.addEventListener("click", toggleTask);
+        label.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                toggleTask();
+            }
+        });
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete-button";
+        deleteButton.type = "button";
+        deleteButton.textContent = "Delete";
+        deleteButton.setAttribute("aria-label", "Delete " + task.text);
+
+        deleteButton.addEventListener("click", () => {
+            tasks.splice(index, 1);
+            saveTasks();
+            renderTasks();
+        });
+
+        li.append(label, deleteButton);
+        list.appendChild(li);
+    });
+
+    const completed = tasks.filter(task => task.done).length;
+    $("progress").textContent =
+        `Completed: ${completed} / ${tasks.length}`;
+}
+
+try {
+    const saved = localStorage.getItem("jashuTasks");
+    if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+            tasks = parsed.filter(
+                task => task &&
+                typeof task.text === "string" &&
+                typeof task.done === "boolean"
+            );
+        }
+    } else {
+        // Try importing tasks from the older version of the website.
+        const oldTasks = localStorage.getItem("tasks");
+        if (oldTasks) {
+            const holder = document.createElement("ul");
+            holder.innerHTML = oldTasks;
+
+            tasks = Array.from(holder.querySelectorAll("li"))
+                .map(li => {
+                    const span = li.querySelector("span");
+                    if (!span) return null;
+
+                    const raw = span.textContent.trim();
+                    const done = raw.startsWith("✅");
+                    const text = raw.replace(/^(☐|✅)\s*/, "");
+
+                    return text ? { text, done } : null;
+                })
+                .filter(Boolean);
+
+            saveTasks();
+        }
+    }
+} catch (error) {
+    tasks = [];
+}
+
+renderTasks();
+
+$("taskForm").addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const input = $("taskInput");
+    const text = input.value.trim();
+
+    if (!text) {
+        input.focus();
+        return;
+    }
+
+    tasks.push({ text, done: false });
+    saveTasks();
+    renderTasks();
+    input.value = "";
+    input.focus();
+});
+
+// Study timer
+const STUDY_SECONDS = 25 * 60;
+let timeLeft = STUDY_SECONDS;
+let timerInterval = null;
+
+function displayTime() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+
+    $("timer").textContent =
+        String(minutes).padStart(2, "0") + ":" +
+        String(seconds).padStart(2, "0");
+}
 
 function startTimer() {
-    if (timerInterval) return;
+    if (timerInterval !== null) return;
 
-    timerInterval = setInterval(function() {
-        let minutes = Math.floor(timeLeft / 60);
-        let seconds = timeLeft % 60;
+    if (timeLeft <= 0) {
+        $("timerStatus").textContent = "Press Reset to start again. 🔄";
+        return;
+    }
 
-        document.getElementById("timer").innerHTML =
-            String(minutes).padStart(2, "0") + ":" +
-            String(seconds).padStart(2, "0");
+    $("timerStatus").textContent = "Focus time! You've got this. 📚";
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        displayTime();
 
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
             timerInterval = null;
-            alert("Study session complete! 🎉");
+            $("timerStatus").textContent = "Study session complete! 🎉";
+            alert("Study session complete! Great job, Jashu! 🎉");
         }
-
-        timeLeft--;
     }, 1000);
 }
 
 function resetTimer() {
-    clearInterval(timerInterval);
-    timerInterval = null;
-    timeLeft = 25 * 60;
-    document.getElementById("timer").innerHTML = "25:00";
+    if (timerInterval !== null) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+
+    timeLeft = STUDY_SECONDS;
+    displayTime();
+    $("timerStatus").textContent = "Timer reset. Ready to focus? 📚";
 }
+
+$("startButton").addEventListener("click", startTimer);
+$("resetButton").addEventListener("click", resetTimer);
+
+displayTime();
 </script>
 </body>
-</html>ok
+</html>
