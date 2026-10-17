@@ -344,6 +344,133 @@ body.dark .signature {
 }
 
 
+/* 💗 Cute Photo Gallery */
+.gallery-card {
+  overflow: hidden;
+}
+
+.gallery-subtitle {
+  opacity: 0.8;
+  margin-bottom: 20px;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.photo-item {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid rgba(225, 112, 172, 0.25);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, 0.7);
+  color: #85466d;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(160, 90, 150, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.photo-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(160, 90, 150, 0.22);
+}
+
+.photo-item img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 11px;
+}
+
+.photo-item span {
+  display: block;
+  padding: 10px 2px 4px;
+  font-size: 13px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.photo-viewer[hidden] {
+  display: none;
+}
+
+.photo-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 55px 18px 20px;
+  background: rgba(24, 16, 32, 0.94);
+}
+
+.photo-viewer img {
+  display: block;
+  max-width: 100%;
+  max-height: 78vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 14px;
+}
+
+.photo-viewer p {
+  color: white;
+  text-align: center;
+}
+
+.viewer-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: white;
+  color: #803b68;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+body.dark .photo-item {
+  background: #30283b;
+  color: #ffd7ed;
+  border-color: rgba(255, 180, 220, 0.25);
+}
+
+@media (max-width: 600px) {
+  .photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .photo-item {
+    padding: 6px;
+    border-radius: 13px;
+  }
+
+  .photo-item span {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-item {
+    transition: none;
+  }
+}
+
 </style>
 </head>
 
@@ -425,6 +552,60 @@ body.dark .signature {
     </div>
 </section>
 
+<!-- 💗 Cute Photo Gallery -->
+<section class="card gallery-card" id="photoGallery">
+  <h2>📸 Our Cute Gallery 💗</h2>
+  <p class="gallery-subtitle">
+    Little moments, lovely memories ✨
+  </p>
+
+  <div class="photo-grid">
+    <button class="photo-item" type="button"
+      data-full="images/photo1.jpeg" aria-label="View photo 1">
+      <img src="images/photo1.jpeg" alt="Memory 1" loading="lazy">
+      <span>💗 Sweet Moments</span>
+    </button>
+
+    <button class="photo-item" type="button"
+      data-full="images/photo2.jpeg" aria-label="View photo 2">
+      <img src="images/photo2.jpeg" alt="Memory 2" loading="lazy">
+      <span>✨ Little Joys</span>
+    </button>
+
+    <button class="photo-item" type="button"
+      data-full="images/photo3.jpeg" aria-label="View photo 3">
+      <img src="images/photo3.jpeg" alt="Memory 3" loading="lazy">
+      <span>🌸 Beautiful Days</span>
+    </button>
+
+    <button class="photo-item" type="button"
+      data-full="images/photo4.jpeg" aria-label="View photo 4">
+      <img src="images/photo4.jpeg" alt="Memory 4" loading="lazy">
+      <span>🦋 Happy Times</span>
+    </button>
+
+    <button class="photo-item" type="button"
+      data-full="images/photo5.jpeg" aria-label="View photo 5">
+      <img src="images/photo5.jpeg" alt="Memory 5" loading="lazy">
+      <span>💕 Special Memories</span>
+    </button>
+
+    <button class="photo-item" type="button"
+      data-full="images/photo6.jpeg" aria-label="View photo 6">
+      <img src="images/photo6.jpeg" alt="Memory 6" loading="lazy">
+      <span>🌷 Forever Precious</span>
+    </button>
+  </div>
+</section>
+
+<!-- Enlarged Photo Viewer -->
+<div class="photo-viewer" id="photoViewer" hidden>
+  <button class="viewer-close" id="closePhoto"
+    type="button" aria-label="Close photo">✕</button>
+  <img id="viewerImage" src="" alt="Enlarged memory">
+  <p id="viewerCaption"></p>
+</div>
+
 </main>
 
 <footer>Made with ❤️ by Jashu</footer>
@@ -439,8 +620,7 @@ try {
     if (localStorage.getItem("theme") === "dark") {
         document.body.classList.add("dark");
     }
-} catch (error) {}
-
+} catch (error) {} 
 function updateThemeButton() {
     themeButton.textContent = document.body.classList.contains("dark")
         ? "☀️ Light Mode"
@@ -653,6 +833,48 @@ closeLetterButton.addEventListener("click", () => {
     openLetterButton.textContent = "💌 Open Your Letter";
     openLetterButton.focus();
 });
+
+/* 💗 Photo Gallery Viewer */
+const photoViewer = document.getElementById("photoViewer");
+const viewerImage = document.getElementById("viewerImage");
+const viewerCaption = document.getElementById("viewerCaption");
+const closePhoto = document.getElementById("closePhoto");
+
+document.querySelectorAll(".photo-item").forEach((item) => {
+  item.addEventListener("click", () => {
+    const image = item.querySelector("img");
+
+    viewerImage.src = item.dataset.full;
+    viewerImage.alt = image.alt;
+    viewerCaption.textContent =
+      item.querySelector("span").textContent;
+
+    photoViewer.hidden = false;
+    document.body.style.overflow = "hidden";
+    closePhoto.focus();
+  });
+});
+
+function hidePhotoViewer() {
+  photoViewer.hidden = true;
+  viewerImage.src = "";
+  document.body.style.overflow = "";
+}
+
+closePhoto.addEventListener("click", hidePhotoViewer);
+
+photoViewer.addEventListener("click", (event) => {
+  if (event.target === photoViewer) {
+    hidePhotoViewer();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !photoViewer.hidden) {
+    hidePhotoViewer();
+  }
+});
+
 
 </script>
 </body>
