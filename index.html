@@ -514,6 +514,35 @@ body.dark .photo-item {
 }
 
 
+.floating-hearts {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.floating-heart {
+  position: absolute;
+  bottom: -40px;
+  left: var(--heart-x);
+  font-size: var(--heart-size);
+  animation: floatHeart var(--heart-duration) linear forwards;
+  opacity: 0;
+}
+
+@keyframes floatHeart {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% { opacity: 0.8; }
+  100% {
+    transform: translateY(-110vh) rotate(35deg);
+    opacity: 0;
+  }
+}
+
 </style>
 </head>
 
