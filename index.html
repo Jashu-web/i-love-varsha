@@ -469,7 +469,50 @@ body.dark .photo-item {
   .photo-item {
     transition: none;
   }
+
+
+/* 💗 Floating Hearts */
+.floating-hearts {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10;
 }
+
+.floating-heart {
+  position: absolute;
+  bottom: -45px;
+  left: var(--heart-x);
+  font-size: var(--heart-size);
+  opacity: 0;
+  animation: floatHeart var(--heart-duration) linear forwards;
+  filter: drop-shadow(0 3px 5px rgba(230, 90, 160, 0.2));
+}
+
+@keyframes floatHeart {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.7);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: translateY(-110vh) rotate(35deg) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-hearts {
+    display: none;
+  }
+}
+
 
 </style>
 </head>
@@ -875,7 +918,43 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+/* 💗 Gentle Floating Hearts */
+const heartsContainer = document.getElementById("floatingHearts");
+const heartEmojis = ["💗", "💕", "💖", "❤️", "💘"];
+
+function createFloatingHeart() {
+  if (!heartsContainer) return;
+
+  const heart = document.createElement("span");
+  heart.className = "floating-heart";
+  heart.textContent =
+    heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+
+  heart.style.setProperty("--heart-x", Math.random() * 95 + "%");
+  heart.style.setProperty("--heart-size", 16 + Math.random() * 18 + "px");
+  heart.style.setProperty("--heart-duration", 7 + Math.random() * 5 + "s");
+
+  heartsContainer.appendChild(heart);
+
+  heart.addEventListener("animationend", () => heart.remove());
+}
+
+if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  createFloatingHeart();
+  const heartTimer = setInterval(createFloatingHeart, 1200);
+
+  window.addEventListener("pagehide", () => {
+    clearInterval(heartTimer);
+  }, { once: true });
+}
+
+
 
 </script>
+
+<!-- 💗 Floating Hearts Animation -->
+<div class="floating-hearts" id="floatingHearts"
+     aria-hidden="true"></div>
+
 </body>
 </html>
