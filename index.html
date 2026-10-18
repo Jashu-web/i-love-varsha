@@ -509,7 +509,7 @@ body.dark .photo-item {
 
 @media (prefers-reduced-motion: reduce) {
   .floating-hearts {
-    display: none;
+    display: black;
   }
 }
 
@@ -956,14 +956,9 @@ function createFloatingHeart() {
 
   heart.addEventListener("animationend", () => heart.remove());
 }
-
-if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  createFloatingHeart();
-  const heartTimer = setInterval(createFloatingHeart, 1200);
-
-  window.addEventListener("pagehide", () => {
-    clearInterval(heartTimer);
-  }, { once: true });
+if (heartsContainer) {
+    createFloatingHeart();
+    setInterval(createFloatingHeart, 1200);
 }
 
 
